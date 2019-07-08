@@ -9,7 +9,7 @@ def help():
 	print("-d --dict    The dictionary to modify")
 	print("-o --out     Output file name (default is out.txt)")
 	print("-s --short   Remove lines with length shorter/equal to number specified")
-	print("-d --dupli   Remove duplicate lines of the dictionary")
+	print("-m --multi   Remove duplicate lines of the dictionary")
 	print("-l --lower   Turn all upper-case letters to lower-case")
 	print("-u --upper   Turn all lower-case letters into upper-case")
 	print("-j --join    Join two dictionaries into one")
@@ -44,6 +44,7 @@ def file_len(filename):
 def remove_short_lines(file1, short, output):
 	count = 0;
 	short = int(short)
+	short = short + 1
 	print("Source:", file1)
 	filelength = file_len(file1)
 	print("Lines:",filelength)
@@ -58,7 +59,7 @@ def remove_short_lines(file1, short, output):
 					count = count + 1
 	print("Removed", count, "lines")
 	print("Lines:", file_len(output))
-	print("Output:", output)		
+	print("Output:", output)
 
 def multi_remove(filename, output):
 	length = file_len(filename)
@@ -134,7 +135,6 @@ elif exp:
 	explain()
 else:
 	print("Please use -a / --arg for help")
-
 
 
 
