@@ -1,6 +1,9 @@
 # DirectoryModifier
 Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; reverse, combine wordlists!
 
+### Disclaimer
+**This is free software and comes with _no warranty!_ Licensed under the MIT license. Do not use for illegal purposes.**
+
 ### Manual & explaination
 
 -d --dict 
