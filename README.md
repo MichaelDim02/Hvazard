@@ -1,7 +1,7 @@
 # DirectoryModifier
 Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; reverse, combine wordlists!
 
-# Manual & explaination
+### Manual & explaination
 
 -d --dict 
  Specifies the file you want to modify. This is the only parameter / argument that is not optional.
