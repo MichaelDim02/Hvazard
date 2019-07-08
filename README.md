@@ -2,7 +2,7 @@
 Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; reverse, combine wordlists!
 
 ### Disclaimer
-**This is free software and comes with _no warranty!_ Licensed under the MIT license. Do not use for illegal purposes.**
+**This is free software and comes with _no warranty!_ Licensed under the MCD Penetration Testing Software License. Do not use for illegal purposes.**
 
 ### Manual & explaination
 
