@@ -6,7 +6,6 @@ def banner():
 	print("By MichaelDim02\n")
 
 def info():
-	print("Copyright (c) 2019 Michael C. Dim")
 	print("Thessaloniki // Greece // 2019")
 	print("Licensed under the MCD's Penetration testing software License (mcd_pt_1.0)\n")
 	print("Do not use for illegal purposes. The author is not responsible for any damage caused")
