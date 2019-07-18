@@ -39,9 +39,16 @@ Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; rev
 	python dm.py -d wd1.txt -j wd2.txt	<- The result is saved on the second wordlist (wd2.txt)
 
 
+-c --cut 
+ This operation removes all lines before the line number you specify. Useful if you have already used a large part of the wordlist and do not want to go through the same process. Example:
+	python --cut rockyou.txt -o cutrocku.txt
+
+
 -e --exp 
  This option shows this message. 
 
 
 -a --arg 
  This option shows the arguments & options. 
+
+
