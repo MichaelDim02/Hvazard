@@ -2,6 +2,7 @@ from __future__ import print_function
 import argparse
 
 def banner():
+	print("HVAZARD")
 	print("Dictionary Modifier v2.0")
 	print("By MichaelDim02\n")
 
