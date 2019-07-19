@@ -152,8 +152,6 @@ try:
 			with open(output, "w+") as f1:
 				for line in f:
 					count = count + 1
-					print(count)
-					print(cut)
 					if count >= int(cut):
 						f1.write(line)
 		print("Output:", output)
