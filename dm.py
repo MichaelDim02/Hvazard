@@ -2,8 +2,11 @@ from __future__ import print_function
 import argparse
 
 def banner():
-	print("HVAZARD")
-	print("Dictionary Modifier v2.0")
+	print(" ")
+	print("""\ \ \  \ /=\ /=/ /=\ /=\ =\ 
+|=| |==| |=|  /  |=| |=/ | |
+\ \  \/  / / /=/ / / | \ =/""")
+	print("\nDictionary Modifier v2.1")
 	print("By MichaelDim02\n")
 
 def info():
@@ -23,7 +26,7 @@ def help():
 	print("-e --exp     Arguments, options, examples & explaination")
 	print("-a --arg     Options & arguments (help)")
 	print("-i --info    Info, copyright & license\n")
-	print("Usage: python dm.py -d [FILENAME] [OPERATION]")
+	print("Usage: python dm.py -d [FILENAME] [OPERATION] -o [OUTPUT-FILENAME]")
 
 def explain():
 	print("Manual & explaination")
@@ -111,59 +114,61 @@ banner()
 if out:
 	output = out;
 short = args.short
-if short:
-	remove_short_lines(filename, short, output)
-elif lower:
-	print("Source:", filename)
-	print("Upper case to lower case\n")
-	with open(filename) as f:
-		with open(output, "w+") as f1:
-			for line in f:
-				line = line.lower()
-				f1.write(line)
-
-	print("Output:",output)
-elif upper:
-	print("Source:", filename)
-	print("Lower case to upper case\n")
-	with open(filename) as f:
-		with open(output, "w+") as f1:
-			for line in f:
-				length = len(line.strip())
-				line = line.upper()
-				f1.write(line)
-
-	print("Output:",output)
-elif join:
-	print("Joining",filename, "and", join, "\n")
-	with open(filename) as f:
-		with open(join, "a") as f1:
-			for line in f:
-				f1.write(line)
-	print("Output:", join)
-elif cut:
-	print("Remove lines of",filename,"before line",cut)
-	count = 0
-	with open(filename) as f:
-		with open(output, "w+") as f1:
-			for line in f:
-				count = count + 1
-				print(count)
-				print(cut)
-				if count >= int(cut):
+try:
+	if short:
+		remove_short_lines(filename, short, output)
+	elif lower:
+		print("Source:", filename)
+		print("Upper case to lower case\n")
+		with open(filename) as f:
+			with open(output, "w+") as f1:
+				for line in f:
+					line = line.lower()
 					f1.write(line)
-	print("Output:", output)
-elif multi:
-	multi_remove(filename, output)
-elif arg:
-	help()
-elif exp:
-	explain()
-elif inf:
-	info()
-else:
-	print("Please use -a / --arg for help")
-
-
-
-
+	
+		print("Output:",output)
+	elif upper:
+		print("Source:", filename)
+		print("Lower case to upper case\n")
+		with open(filename) as f:
+			with open(output, "w+") as f1:
+				for line in f:
+					length = len(line.strip())
+					line = line.upper()
+					f1.write(line)
+	
+		print("Output:",output)
+	elif join:
+		print("Joining",filename, "and", join, "\n")
+		with open(filename) as f:
+			with open(join, "a") as f1:
+				for line in f:
+					f1.write(line)
+		print("Output:", join)
+	elif cut:
+		print("Remove lines of",filename,"before line",cut)
+		count = 0
+		with open(filename) as f:
+			with open(output, "w+") as f1:
+				for line in f:
+					count = count + 1
+					print(count)
+					print(cut)
+					if count >= int(cut):
+						f1.write(line)
+		print("Output:", output)
+	elif multi:
+		multi_remove(filename, output)
+	elif arg:
+		help()
+	elif exp:
+		explain()
+	elif inf:
+		info()
+	else:
+		print("Please use -a / --arg for help")
+except:
+	print("File could not be found.")	
+	
+	
+	
