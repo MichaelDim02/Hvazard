@@ -41,7 +41,11 @@ Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; rev
 
 -c --cut 
  This operation removes all lines before the line number you specify. Useful if you have already used a large part of the wordlist and do not want to go through the same process. Example:
-	python --cut rockyou.txt -o cutrocku.txt
+	python dm.py --cut rockyou.txt -o cutrocku.txt
+
+
+-q --leet 
+ This operation enables leet mode. (a=4,e=3,i=1,o=0). With mode 0, you add the new modified lines and with option 1 you replace them
 
 
 -e --exp 
