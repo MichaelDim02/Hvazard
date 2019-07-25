@@ -1,5 +1,5 @@
 # HVAZARD Dictionary Modifier
-Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; reverse, combine wordlists!
+Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; reverse, combine wordlists and more!
 
 ### Disclaimer
 **This is free software and comes with _no warranty!_ Licensed under the MCD Penetration Testing Software License. Do not use for illegal purposes.**
