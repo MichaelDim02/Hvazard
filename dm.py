@@ -6,7 +6,7 @@ def banner():
 	print("""\ \ \  \ /=\ /=/ /=\ /=\ =\ 
 |=| |==| |=|  /  |=| |=/ | |
 \ \  \/  / / /=/ / / | \ =/""")
-	print("\nDictionary Modifier v2.1")
+	print("\nDictionary Modifier v3.0")
 	print("By MichaelDim02\n")
 
 def info():
@@ -23,6 +23,7 @@ def help():
 	print("-u --upper   Turn all lower-case letters into upper-case")
 	print("-j --join    Join two dictionaries into one")
 	print("-c --cut     Remove all passwords before a specified line")
+	print("-q --leet    Add/replace with leet mod (0=add, 1=replace)")
 	print("-e --exp     Arguments, options, examples & explaination")
 	print("-a --arg     Options & arguments (help)")
 	print("-i --info    Info, copyright & license\n")
@@ -43,7 +44,8 @@ def explain():
 	print("-j --join \n This operation joins two files together to great one larger file. Example:")
 	print("	python dm.py -d wd1.txt -j wd2.txt	<- The result is saved on the second wordlist (wd2.txt)\n\n")
 	print("-c --cut \n This operation removes all lines before the line number you specify. Useful if you have already used a large part of the wordlist and do not want to go through the same process. Example:")
-	print("	python --cut rockyou.txt -o cutrocku.txt\n\n")
+	print("	python dm.py --cut rockyou.txt -o cutrocku.txt\n\n")
+	print("-q --leet \n This operation enables leet mode. (a=4,e=3,i=1,o=0). With mode 0, you add the new modified lines and with option 1 you replace them\n\n")
 	print("-e --exp \n This option shows this message. \n\n")
 	print("-a --arg \n This option shows the arguments & options. \n\n")
 
@@ -54,6 +56,27 @@ def file_len(filename):
 			pass
 	return i + 1
 
+def turn_leet(filename, output, mode):
+	print("Source: ", filename)
+	filelength = file_len(filename)
+	if mode == "0":
+		print("Lines:",filelength)
+	print("Leet mode", mode)
+	with open(filename) as f:
+		with open(output, "w+") as f1:
+			for line in f:
+				if "a" in line or "e" in line or "o" in line or "1" in line:
+					if mode == "0":
+						f1.write(line)
+					new_line = line.replace("a","4").replace("e","3").replace("o","0").replace("i","1")
+					f1.write(new_line)
+				else:
+					f1.write(line)
+	print("\n")
+	if mode == "0":
+		newfilelength = file_len(output)
+		print("Lines:",newfilelength)
+	print("Output:",output)
 def remove_short_lines(file1, short, output):
 	count = 0;
 	short = int(short)
@@ -85,6 +108,7 @@ def multi_remove(filename, output):
 		f.writelines(unique_lines)
 	print("Lines:", file_len(output))
 	print("Output:",output)
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--dict", help="The dictionary")
 parser.add_argument("-o", "--out", help="Output file name (default is out.txt)")
@@ -93,6 +117,7 @@ parser.add_argument("-m","--multi", action="store_true", help="Remove duplicate 
 parser.add_argument("-l","--lower", action="store_true", help="Turn all upper-case letters to lower-case")
 parser.add_argument("-j","--join", help="Join two dictionaries into one")
 parser.add_argument("-c","--cut", help="Remove all passwords before a specified line")
+parser.add_argument("-q","--leet", help="Add/replace with leet mod (0=add, 1=replace)")
 parser.add_argument("-u","--upper", action="store_true", help="Turn all lower-case letters into upper-case")
 parser.add_argument("-e","--exp", action="store_true", help="Arguments, options, exampls & explaination")
 parser.add_argument("-a","--arg", action="store_true", help="Options & arguments (help)")
@@ -105,15 +130,19 @@ out = args.out
 arg = args.arg
 cut = args.cut
 inf = args.info
+leet = args.leet
 upper = args.upper
 lower = args.lower
 multi = args.multi
 join = args.join
 output = "out.txt"
+
 banner()
+
 if out:
 	output = out;
 short = args.short
+
 try:
 	if short:
 		remove_short_lines(filename, short, output)
@@ -125,7 +154,7 @@ try:
 				for line in f:
 					line = line.lower()
 					f1.write(line)
-	
+
 		print("Output:",output)
 	elif upper:
 		print("Source:", filename)
@@ -136,7 +165,7 @@ try:
 					length = len(line.strip())
 					line = line.upper()
 					f1.write(line)
-	
+
 		print("Output:",output)
 	elif join:
 		print("Joining",filename, "and", join, "\n")
@@ -155,6 +184,8 @@ try:
 					if count >= int(cut):
 						f1.write(line)
 		print("Output:", output)
+	elif leet:
+		turn_leet(filename,output,leet)
 	elif multi:
 		multi_remove(filename, output)
 	elif arg:
@@ -166,7 +197,4 @@ try:
 	else:
 		print("Please use -a / --arg for help")
 except:
-	print("File could not be found.")	
-	
-	
-	
+	print("File could not be found.")
