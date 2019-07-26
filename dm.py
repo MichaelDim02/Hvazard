@@ -6,7 +6,7 @@ def banner():
 	print("""\ \ \  \ /=\ /=/ /=\ /=\ =\ 
 |=| |==| |=|  /  |=| |=/ | |
 \ \  \/  / / /=/ / / | \ =/""")
-	print("\nDictionary Modifier v3.0")
+	print("\nDictionary Modifier v4.0")
 	print("By MichaelDim02\n")
 
 def info():
@@ -26,7 +26,12 @@ def help():
 	print("-q --leet    Add/replace with leet mod (0=add, 1=replace)")
 	print("-e --exp     Arguments, options, examples & explaination")
 	print("-a --arg     Options & arguments (help)")
-	print("-i --info    Info, copyright & license\n")
+	print("-i --info    Info, copyright & license")
+	print("-g --gen     Generator. Provide all characters you want to use")
+	print("             in a string without commas or spaces.")
+	print("   --min     Minimum number of digits")
+	print("   --max     Maximum number of digits\n")
+
 	print("Usage: python dm.py -d [FILENAME] [OPERATION] -o [OUTPUT-FILENAME]")
 
 def explain():
@@ -48,6 +53,10 @@ def explain():
 	print("-q --leet \n This operation enables leet mode. (a=4,e=3,i=1,o=0). With mode 0, you add the new modified lines and with option 1 you replace them\n\n")
 	print("-e --exp \n This option shows this message. \n\n")
 	print("-a --arg \n This option shows the arguments & options. \n\n")
+
+def split(word):
+	word = str(word)
+	return [char for char in word]
 
 def file_len(filename):
 	i = 0
@@ -109,6 +118,98 @@ def multi_remove(filename, output):
 	print("Lines:", file_len(output))
 	print("Output:",output)
 
+def generator(charset, min_, max_, output):
+	f = open(output, "w+")
+	min_ = int(min_)
+	max_ = int(max_)
+	list_charset = split(charset)
+	if min_ <= 1:
+		for digit in list_charset:
+			text = digit+"\n"
+			f.write(text)
+	if min_ <= 2 and max_ >= 2:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				text = digit+digit2+"\n"
+				f.write(text)
+	if min_ <= 3 and max_ >= 3:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				for digit3 in list_charset:
+					text = digit+digit2+digit3+"\n"
+					f.write(text)
+	if min_ <= 4 and max_ >= 4:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				for digit3 in list_charset:
+					for digit4 in list_charset:
+						text = digit+digit2+digit3+digit4+"\n"
+						f.write(text)
+	if min_ <= 5 and max_ >= 5:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				for digit3 in list_charset:
+					for digit4 in list_charset:
+						for digit5 in list_charset:
+							text = digit+digit2+digit3+digit4+digit5+"\n"
+							f.write(text)
+	if min_ <= 6 and max_ >= 6:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				for digit3 in list_charset:
+					for digit4 in list_charset:
+						for digit5 in list_charset:
+							for digit6 in list_charset:
+								text = digit+digit2+digit3+digit4+digit5+digit6+"\n"
+								f.write(text)
+	if min_ <= 7 and max_ >= 7:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				for digit3 in list_charset:
+					for digit4 in list_charset:
+						for digit5 in list_charset:
+							for digit6 in list_charset:
+								for digit7 in list_charset:
+									text = digit+digit2+digit3+digit4+digit5+digit6+digit7+"\n"
+									f.write(text)
+	if min_ <= 8 and max_ >= 8:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				for digit3 in list_charset:
+					for digit4 in list_charset:
+						for digit5 in list_charset:
+							for digit6 in list_charset:
+								for digit7 in list_charset:
+									for digit8 in list_charset:
+										text = digit+digit2+digit3+digit4+digit5+digit6+digit7+digit8+"\n"
+										f.write(text)
+	if min_ <= 9 and max_ >= 9:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				for digit3 in list_charset:
+					for digit4 in list_charset:
+						for digit5 in list_charset:
+							for digit6 in list_charset:
+								for digit7 in list_charset:
+									for digit8 in list_charset:
+										for digit9 in list_charset:
+											text = digit+digit2+digit3+digit4+digit5+digit6+digit7+digit8+digit9+"\n"
+											f.write(text)
+	if min_ <= 10 and max_ >= 10:
+		for digit in list_charset:
+			for digit2 in list_charset:
+				for digit3 in list_charset:
+					for digit4 in list_charset:
+						for digit5 in list_charset:
+							for digit6 in list_charset:
+								for digit7 in list_charset:
+									for digit8 in list_charset:
+										for digit9 in list_charset:
+											for digit10 in list_charset:
+												text = digit+digit2+digit3+digit4+digit5+digit6+digit7+digit8+digit9+digit10+"\n"
+												f.write(text)
+	print("Output: "+output)
+	#print("Generated ",file_len(output)," lines")
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--dict", help="The dictionary")
 parser.add_argument("-o", "--out", help="Output file name (default is out.txt)")
@@ -119,6 +220,9 @@ parser.add_argument("-j","--join", help="Join two dictionaries into one")
 parser.add_argument("-c","--cut", help="Remove all passwords before a specified line")
 parser.add_argument("-q","--leet", help="Add/replace with leet mod (0=add, 1=replace)")
 parser.add_argument("-u","--upper", action="store_true", help="Turn all lower-case letters into upper-case")
+parser.add_argument("-g","--gen", help="Generator. Provide all characters you want to use in a string without commas or spaces.")
+parser.add_argument("--min", help="Minimum number of digits")
+parser.add_argument("--max", help="Maximum number of digits")
 parser.add_argument("-e","--exp", action="store_true", help="Arguments, options, exampls & explaination")
 parser.add_argument("-a","--arg", action="store_true", help="Options & arguments (help)")
 parser.add_argument("-i","--info", action="store_true", help="Info, copyright & license")
@@ -135,6 +239,9 @@ upper = args.upper
 lower = args.lower
 multi = args.multi
 join = args.join
+gen = args.gen
+min_ = args.min
+max_ = args.max
 output = "out.txt"
 
 banner()
@@ -143,6 +250,18 @@ if out:
 	output = out;
 short = args.short
 
+if gen:
+	print("Generator mode\nCharset: ",gen)
+	if min_:
+		print("Minimum number of digits: ",min_)
+		if max_:
+			print("Maximum number of digits: ",max_)
+			generator(gen, min_, max_, output)
+		else:
+			print("You need to provide min and max when using the generator.")
+	else:
+		print("You need to provide min and max when using the generator.")
+	exit(0)
 try:
 	if short:
 		remove_short_lines(filename, short, output)
