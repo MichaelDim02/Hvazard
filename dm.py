@@ -1,12 +1,13 @@
 from __future__ import print_function
 import argparse
 
+
 def banner():
 	print(" ")
 	print("""\ \ \  \ /=\ /=/ /=\ /=\ =\ 
 |=| |==| |=|  /  |=| |=/ | |
 \ \  \/  / / /=/ / / | \ =/""")
-	print("\nDictionary Modifier v4.0")
+	print("\nDictionary Modifier v5.0")
 	print("By MichaelDim02\n")
 
 def info():
@@ -18,6 +19,7 @@ def help():
 	print("-d --dict    The dictionary to modify")
 	print("-o --out     Output file name (default is out.txt)")
 	print("-s --short   Remove lines with length shorter/equal to number specified")
+	print("-b --big     Remove lines with length greater/equal to number specified")
 	print("-m --multi   Remove duplicate lines of the dictionary")
 	print("-l --lower   Turn all upper-case letters to lower-case")
 	print("-u --upper   Turn all lower-case letters into upper-case")
@@ -40,6 +42,8 @@ def explain():
 	print("-o --out \n The output filename (optional). Default is out.txt.\n\n")
 	print("-s --short \n This operation removes the lines with length shorter/equal to the specified number. Example:")
 	print("	python dm.py -d dictionary.txt -s 5	<- This removes all lines with 5 or less characters of the file dictionary.txt\n\n")
+        print("-s --short \n This operation removes the lines with length greater/equal to the specified number. Example:")
+        print(" python dm.py -d dictionary.txt -b 7     <- This removes all lines with 7 or more characters of the file dictionary.txt\n\n")
 	print("-d --dupli \n This operation removes duplicate lines. If a line appears more than once, it gets removed.\n This is done so no password is tried more than once, since it is a waste of time. Example:")
 	print("	python dm.py -d wordlist -d\n\n")
 	print("-l --lower \n This operation turns all upper-case letters to lower-case. Lower-case letters remain that way. Example:")
@@ -51,7 +55,10 @@ def explain():
 	print("-c --cut \n This operation removes all lines before the line number you specify. Useful if you have already used a large part of the wordlist and do not want to go through the same process. Example:")
 	print("	python dm.py --cut rockyou.txt -o cutrocku.txt\n\n")
 	print("-q --leet \n This operation enables leet mode. (a=4,e=3,i=1,o=0). With mode 0, you add the new modified lines and with option 1 you replace them\n\n")
-	print("-e --exp \n This option shows this message. \n\n")
+	print("-g --gen \n This operation generates a wordlist with a characters of the string to use as a value to it.")
+	print(" The passwords have a minimum length of --min and a maximum length with --max.")
+	print("\n\npython dm.py --gen abcd123 --min 2 --max 3	<- This creates a wordlist with the combinations of abcd123 with min and max lengths 2 and 3.")
+	print("\n\n-e --exp \n This option shows this message. \n\n")
 	print("-a --arg \n This option shows the arguments & options. \n\n")
 
 def split(word):
@@ -61,9 +68,9 @@ def split(word):
 def file_len(filename):
 	i = 0
 	with open(filename) as f:
-		for i, l in enumerate(f):
-			pass
-	return i + 1
+		for line in f:
+			i = i + 1
+	return i
 
 def turn_leet(filename, output, mode):
 	print("Source: ", filename)
@@ -86,6 +93,7 @@ def turn_leet(filename, output, mode):
 		newfilelength = file_len(output)
 		print("Lines:",newfilelength)
 	print("Output:",output)
+
 def remove_short_lines(file1, short, output):
 	count = 0;
 	short = int(short)
@@ -93,7 +101,7 @@ def remove_short_lines(file1, short, output):
 	print("Source:", file1)
 	filelength = file_len(file1)
 	print("Lines:",filelength)
-	print("Removing lines with length shorter than", short, "character\n")
+	print("Removing lines with length shorter than", short, "digits\n")
 	with open(file1) as f:
 		with open(output, "w+") as f1:
 			for line in f:
@@ -105,6 +113,26 @@ def remove_short_lines(file1, short, output):
 	print("Removed", count, "lines")
 	print("Lines:", file_len(output))
 	print("Output:", output)
+
+def remove_long_lines(file1, long, output):
+	count = 0
+	long = int(long)
+	print("Source:", file1)
+	filelength = file_len(file1)
+        print("Lines:",filelength)
+        print("Removing lines with length greater than", long, "digits\n")
+        with open(file1) as f:
+                with open(output, "w+") as f1:
+                        for line in f:
+                                length = len(line.strip())
+                                if length < long:
+                                        f1.write(line)
+                                else:
+                                        count = count + 1
+        print("Removed", count, "lines")
+        print("Lines:", file_len(output))
+        print("Output:", output)
+
 
 def multi_remove(filename, output):
 	length = file_len(filename)
@@ -209,11 +237,12 @@ def generator(charset, min_, max_, output):
 												text = digit+digit2+digit3+digit4+digit5+digit6+digit7+digit8+digit9+digit10+"\n"
 												f.write(text)
 	print("Output: "+output)
-	#print("Generated ",file_len(output)," lines")
+	print("Generated ",file_len(output)," lines")
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--dict", help="The dictionary")
 parser.add_argument("-o", "--out", help="Output file name (default is out.txt)")
 parser.add_argument("-s","--short", help="Remove lines with length shorter or equal to number specified")
+parser.add_argument("-b","--big", help="Remove lines with length grater or equal to number specified")
 parser.add_argument("-m","--multi", action="store_true", help="Remove duplicate lines of the dictionary")
 parser.add_argument("-l","--lower", action="store_true", help="Turn all upper-case letters to lower-case")
 parser.add_argument("-j","--join", help="Join two dictionaries into one")
@@ -243,12 +272,13 @@ gen = args.gen
 min_ = args.min
 max_ = args.max
 output = "out.txt"
+short = args.short
+big = args.big
 
 banner()
 
 if out:
 	output = out;
-short = args.short
 
 if gen:
 	print("Generator mode\nCharset: ",gen)
@@ -265,6 +295,9 @@ if gen:
 try:
 	if short:
 		remove_short_lines(filename, short, output)
+	elif big:
+		remove_long_lines(filename, big, output)
+
 	elif lower:
 		print("Source:", filename)
 		print("Upper case to lower case\n")
@@ -316,4 +349,8 @@ try:
 	else:
 		print("Please use -a / --arg for help")
 except:
-	print("File could not be found.")
+	print("There was an error. Please check if the filepath and other values are correct.")
+	print("If you are certain that your command was correct, please contact me on Github.")
+	print("If you believe there is an error in the code, or a bug, please start a new issue")
+	print("thread and describe your problem and your suspicion. I will try to resolve it.")
+	print("Thanks :)")
