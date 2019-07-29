@@ -18,6 +18,11 @@ Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; rev
 	python dm.py -d dictionary.txt -s 5	<- This removes all lines with 5 or less characters of the file dictionary.txt
 
 
+-s --short 
+ This operation removes the lines with length greater/equal to the specified number. Example:
+ python dm.py -d dictionary.txt -b 7     <- This removes all lines with 7 or more characters of the file dictionary.txt
+
+
 -d --dupli 
  This operation removes duplicate lines. If a line appears more than once, it gets removed.
  This is done so no password is tried more than once, since it is a waste of time. Example:
@@ -48,11 +53,15 @@ Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; rev
  This operation enables leet mode. (a=4,e=3,i=1,o=0). With mode 0, you add the new modified lines and with option 1 you replace them
 
 
+-g --gen 
+ This operation generates a wordlist with a characters of the string to use as a value to it.
+ The passwords have a minimum length of --min and a maximum length with --max.
+
+
+python dm.py --gen abcd123 --min 2 --max 3	<- This creates a wordlist with the combinations of abcd123 with min and max lengths 2 and 3.
 -e --exp 
  This option shows this message. 
 
 
 -a --arg 
  This option shows the arguments & options. 
-
-
