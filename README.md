@@ -59,6 +59,8 @@ Remove short passwords &amp; duplicates, change lowercase to uppercase &amp; rev
 
 
 python dm.py --gen abcd123 --min 2 --max 3	<- This creates a wordlist with the combinations of abcd123 with min and max lengths 2 and 3.
+
+
 -e --exp 
  This option shows this message. 
 
